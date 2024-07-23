@@ -1,0 +1,5 @@
+name: VotingRewards
+version: '${project.version}'
+main: net.worldmc.votingrewards.VotingRewards
+api-version: '1.21'
+depend: [Votifier]

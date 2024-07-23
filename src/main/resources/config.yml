@@ -1,0 +1,10 @@
+database:
+  jdbc-url: "jdbc:mysql://node.worldmc.net:3306/s5_voting?useSSL=true"
+  username: ""
+  password: ""
+
+voting:
+  command: "crates give <player> vote"
+  default-sound: "ENTITY_EXPERIENCE_ORB_PICKUP"
+  message: "<gray>[<b><gradient:#00AA00:#FFAA00>WorldMC</gradient></b>] <green>Thanks for voting, <player>! You've received <yellow>1 vote crate.</yellow>"
+  offline-votes-message: "<gray>[<b><gradient:#00AA00:#FFAA00>WorldMC</gradient></b>] <green>You received <yellow><offline_votes> vote crates</yellow> while you were offline!"
