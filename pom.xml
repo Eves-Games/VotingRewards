@@ -11,10 +11,10 @@
 
   <name>VotingRewards</name>
 
-    <organization>
-        <name>Eve's Games</name>
-        <url>https://github.com/Eves-Games</url>
-    </organization>
+  <organization>
+      <name>Eve's Games</name>
+      <url>https://github.com/Eves-Games</url>
+  </organization>
 
   <properties>
     <java.version>21</java.version>
