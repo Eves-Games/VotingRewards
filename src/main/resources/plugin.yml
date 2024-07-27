@@ -4,4 +4,4 @@ main: net.worldmc.votingrewards.VotingRewards
 api-version: '1.21'
 authors: [Ezekiel Pari]
 folia-supported: true
-depend: [VotifierPlus]
+depend: [VotifierPlus, Morpheus]

@@ -2,6 +2,7 @@ package net.worldmc.votingrewards.listeners;
 
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.model.VotifierEvent;
+import net.worldmc.morpheus.api.MorpheusAPI;
 import net.worldmc.votingrewards.VotingRewards;
 import net.worldmc.votingrewards.database.Database;
 import org.bukkit.Bukkit;
@@ -15,15 +16,16 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import java.sql.*;
 import java.util.UUID;
 
-import static net.worldmc.votingrewards.util.MessageUtil.formatMessage;
-
 public class VoteListener implements Listener {
+
+    private final MorpheusAPI morpheusAPI;
     private final VotingRewards plugin;
     private final Database database;
 
-    public VoteListener(VotingRewards votingRewards) {
-        this.plugin = votingRewards;
-        this.database = votingRewards.getDatabase();
+    public VoteListener(VotingRewards plugin) {
+        this.morpheusAPI = plugin.getMorpheusAPI();
+        this.plugin = plugin;
+        this.database = plugin.getDatabase();
         createTableIfNotExists();
     }
 
@@ -45,8 +47,9 @@ public class VoteListener implements Listener {
                 giveReward(player);
             }
             clearOfflineVotes(player.getUniqueId());
-            String offlineVotesMessage = plugin.getConfig().getString("voting.offline-votes-message", "<gray>[<b><gradient:#00AA00:#FFAA00>WorldMC</gradient></b>] <green>You received <yellow><offline_votes></yellow> vote crates while you were offline!");
-            player.sendMessage(formatMessage(offlineVotesMessage, player, offlineVotes));
+            String offlineVotesMessage = plugin.getConfig().getString("voting.offline-votes-message", "You received <yellow><offline_votes></yellow> vote crates while you were offline!");
+            String finalMessage = offlineVotesMessage.replace("<offline_votes>", String.valueOf(offlineVotes));
+            morpheusAPI.sendPlayerMessage(player, finalMessage, true);
         }
     }
 
@@ -133,7 +136,8 @@ public class VoteListener implements Listener {
         String soundName = plugin.getConfig().getString("voting.default-sound", "ENTITY_EXPERIENCE_ORB_PICKUP");
         player.playSound(player.getLocation(), Sound.valueOf(soundName), 1.0f, 1.0f);
 
-        String message = plugin.getConfig().getString("voting.message", "<gray>[<b><gradient:#00AA00:#FFAA00>WorldMC</gradient></b>] <green>Thanks for voting, <player>! You've received <yellow>1 vote crate.</yellow>");
-        player.sendMessage(formatMessage(message, player));
+        String message = plugin.getConfig().getString("voting.message", "Thanks for voting, <player>! You've received <yellow>1 vote crate.</yellow>");
+        String finalMessage = message.replace("<player>", player.getName());
+        morpheusAPI.sendPlayerMessage(player, finalMessage, true);
     }
 }
